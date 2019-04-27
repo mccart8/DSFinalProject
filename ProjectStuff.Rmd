@@ -29,7 +29,7 @@ for(i in 1:3) {
                "&apikey=", myapikey)
   nytimesGET <- GET(nytimesURL)
   details <- content(nytimesGET, "parse")
-  omdb[i,1] <- details$Title
+  omdb[i,1] <- details$docs$web_url
   omdb[i,2] <- details$Rated
   omdb[i,3] <- details$Genre
 }
