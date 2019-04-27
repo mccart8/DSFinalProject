@@ -21,17 +21,16 @@ nytimesAPI<-"dZEgsuBIgwiDwmOrfYTAVMNlHwopNjGv"
 
 nytimesURL<- str_c("https://api.nytimes.com/svc/search/v2/articlesearch.json?facet_field=day_of_week&facet=true&begin_date=20161001&end_date=20161031&api-key=", nytimesAPI)
 
-NyTimes<-tibble(html=character(), snippet = character(), date = date())
+NyTimes<-tibble(source=character(), url = character())
 
 
 for(i in 1:3) {
   url <- str_c("http://www.omdbapi.com/?t=",movies[i],
-               "&apikey=", myapikey)
+               "&apikey=", nytimesAPI)
   nytimesGET <- GET(nytimesURL)
   details <- content(nytimesGET, "parse")
   omdb[i,1] <- details$docs$web_url
   omdb[i,2] <- details$Rated
-  omdb[i,3] <- details$Genre
 }
 
 details <- content(nytimesGET, "parse")
