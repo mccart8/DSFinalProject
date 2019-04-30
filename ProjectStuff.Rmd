@@ -23,16 +23,27 @@ nytimesURL<- str_c("https://api.nytimes.com/svc/search/v2/articlesearch.json?fac
 
 NyTimes<-tibble(url=character(), headline = character())
 
+url <- str_c("http://api.nytimes.com/svc/semantic/v2/concept/name/nytd_per/.json?fields=pages,links,scope_notes&apikey=", nytimesAPI)
+  nytimesGET <- GET(nytimesURL)
+  details <- content(nytimesGET, "parse")
+  betterdetails<-unlist(details$response$docs)
+  view(betterdetails)
+  
+for(j in 1:10) {
+  url <- str_c("http://api.nytimes.com/svc/semantic/v2/concept/name/nytd_per/.json?fields=pages,links,scope_notes&apikey=", nytimesAPI)
+  nytimesGET <- GET(nytimesURL)
+  details <- content(nytimesGET, "parse")
+  snippets<- details$reponses$docs[[j]]$snippet
+}
+snippets
+
+
 for(i in 1:2) {
-  url <- str_c("http://api.nytimes.com/svc/semantic/v2/concept/name/nytd_per/Obama, Barack.json?fields=pages,links,scope_notes&apikey=", nytimesAPI)
+  url <- str_c("http://api.nytimes.com/svc/semantic/v2/concept/name/nytd_per/.json?fields=pages,links,scope_notes&apikey=", nytimesAPI)
   nytimesGET <- GET(nytimesURL)
   details <- content(nytimesGET, "parse")
   NyTimes[i,1] <- details$response$docs$web_url
   NyTimes[i,2] <- details$response$docs$snippet
 }
-
-details <- content(nytimesGET, "parse")
-
-
 ```
 
