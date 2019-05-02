@@ -20,15 +20,27 @@ library(httr)
 WikiPoverty<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_percentage_of_population_living_in_poverty")
 PovertyNodes<-html_nodes(WikiPoverty, css = "table")
 PovertyTable<-html_table(PovertyNodes, header =TRUE, fill = TRUE)[[1]]
-view(PovertyTable)
+# remove countries with n/a's?? only include on column?? add up columns?
+Poverty <- PovertyTable%>%
+  rename(lessthan_1.90= "< $1.90[4]",
+         lessthan_3.20= "< $3.20[5]",
+         lessthan_5.50= "< $5.50[6]")
+view(Poverty)
 
 WikiTaxes<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates")
 TaxNodes<-html_nodes(WikiTaxes, css= "table")
-TaxTable<-html_table(WikiTaxes, header = TRUE, fill = TRUE)[[10]]
+TaxTable<-html_table(TaxNodes, header = TRUE, fill = TRUE)[[10]]
+view(TaxTable)
+# how to get rid of brackets and extra wording in values??
 
 WikiPopulation<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)")
 PopulationNodes<-html_nodes(WikiPopulation, css = "table")
 PopulationTable<-html_table(PopulationNodes, header = TRUE, fill =TRUE)[[2]]
+
+WikiMinimumWage<- read_html("https://en.wikipedia.org/wiki/List_of_minimum_wages_by_country")
+WageNodes<- html_nodes(WikiMinimumWage, css="table")
+WageTable<-html_table(WageNodes, header=TRUE, fill=TRUE)[[1]]
+view(WageTable)
 
 
 ```
