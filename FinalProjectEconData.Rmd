@@ -1,0 +1,30 @@
+---
+title: "FinalProjectEconData"
+author: "Zach"
+date: "5/2/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(httr)
+```
+
+
+```{r}
+WikiPoverty<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_percentage_of_population_living_in_poverty")
+PovertyNodes<-html_nodes(WikiPoverty, css = "table")
+PovertyTable<-html_table(PovertyNodes, header =TRUE, fill = TRUE)[[1]]
+view(PovertyTable)
+
+WikiTaxes<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates")
+TaxNodes<-html_nodes(WikiTaxes, css= "table")
+TaxTable<-html_table(WikiTaxes, header = TRUE, fill = TRUE)[[10]]
+
+
+```
