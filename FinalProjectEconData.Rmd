@@ -26,5 +26,9 @@ WikiTaxes<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_tax_rat
 TaxNodes<-html_nodes(WikiTaxes, css= "table")
 TaxTable<-html_table(WikiTaxes, header = TRUE, fill = TRUE)[[10]]
 
+WikiPopulation<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)")
+PopulationNodes<-html_nodes(WikiPopulation, css = "table")
+PopulationTable<-html_table(PopulationNodes, header = TRUE, fill =TRUE)[[2]]
+
 
 ```
