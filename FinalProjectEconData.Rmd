@@ -9,6 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Countries the US has been hostile towards, based on: 
+gdp, life expectancy, gov debt, gini coefficient, literacy rate, years since hostily/ how long we were hostile with them
+
 ```{r}
 library(tidyverse)
 library(rvest)
@@ -41,6 +44,17 @@ WikiMinimumWage<- read_html("https://en.wikipedia.org/wiki/List_of_minimum_wages
 WageNodes<- html_nodes(WikiMinimumWage, css="table")
 WageTable<-html_table(WageNodes, header=TRUE, fill=TRUE)[[1]]
 view(WageTable)
+
+
+WikiAid<- read_html("https://en.wikipedia.org/wiki/United_States_foreign_aid")
+AidNodes<- html_nodes(WikiAid, css="table")
+AidTable<- html_table(AidNodes, header=TRUE, fill=TRUE)[[1]]
+view(AidTable)
+
+WikiGDP<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)")
+GDPNodes<- html_nodes(WikiGDP, css="table")
+GDPTable<- html_table(GDPNodes, header=TRUE, fill=TRUE)[[2]]
+view(GDPTable)
 
 
 ```
