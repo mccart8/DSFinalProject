@@ -56,5 +56,8 @@ GDPNodes<- html_nodes(WikiGDP, css="table")
 GDPTable<- html_table(GDPNodes, header=TRUE, fill=TRUE)[[2]]
 view(GDPTable)
 
-
+WikiLife<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_life_expectancy")
+LifeNodes<- html_nodes(WikiLife, css="table")
+LifeTable<- html_table(LifeNodes, header=TRUE, fill=TRUE)[[1]]
+view(LifeTable)
 ```
