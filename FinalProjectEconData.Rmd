@@ -64,4 +64,11 @@ view(LifeTable)
 WikiGini<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_income_equality")
 GiniNodes<- html_nodes(WikiGini, css="table")
 GiniTable<- html_table(GiniNodes, header=TRUE, fill=TRUE)[[4]]
+
+WikiLiteracy<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_literacy_rate")
+LiteracyNodes<- html_nodes(WikiLiteracy, css="table")
+LiteracyTable<- html_table(LiteracyNodes, header=TRUE, fill=TRUE)[[3]]
+view(LiteracyTable)
+
+
 ```
