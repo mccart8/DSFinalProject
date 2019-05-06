@@ -28,12 +28,19 @@ Poverty <- PovertyTable%>%
   rename(lessthan_1.90= "< $1.90[4]",
          lessthan_3.20= "< $3.20[5]",
          lessthan_5.50= "< $5.50[6]")
-view(Poverty)
+PovertyTibble<-as_tibble(Poverty)
 
 WikiTaxes<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates")
 TaxNodes<-html_nodes(WikiTaxes, css= "table")
 TaxTable<-html_table(TaxNodes, header = TRUE, fill = TRUE)[[10]]
-view(TaxTable)
+TaxTib<-as_tibble(TaxTable)
+TaxTibble<-TaxTib%>%
+  mutate(`Corporate tax`= str_replace_all(`Corporate tax`,"%.*", ""),
+         `Income tax (minimum prevailing national + subnational rate)`= str_replace_all(`Income tax (minimum prevailing national + subnational rate)`,"%.*", ""),
+         `Income tax (maximum prevailing national + subnational rate)[1]`= str_replace_all(`Income tax (maximum prevailing national + subnational rate)[1]`,"%.*", ""),
+         `VAT or GST or sales tax`= str_replace_all(`VAT or GST or sales tax`,"%.*$", ""),
+         Country= str_replace_all(Country,"(\\[.*\\]$)", ""))
+
 # how to get rid of brackets and extra wording in values??
 
 WikiPopulation<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)")
@@ -43,25 +50,40 @@ PopulationTable<-html_table(PopulationNodes, header = TRUE, fill =TRUE)[[2]]
 WikiMinimumWage<- read_html("https://en.wikipedia.org/wiki/List_of_minimum_wages_by_country")
 WageNodes<- html_nodes(WikiMinimumWage, css="table")
 WageTable<-html_table(WageNodes, header=TRUE, fill=TRUE)[[1]]
-view(WageTable)
+WageTib<-as_tibble(WageTable, .name_repair = "minimal")
+WageTibble<-WageTib%>%
+  slice(2:n())
 
 
 WikiAid<- read_html("https://en.wikipedia.org/wiki/United_States_foreign_aid")
 AidNodes<- html_nodes(WikiAid, css="table")
 AidTable<- html_table(AidNodes, header=TRUE, fill=TRUE)[[1]]
-view(AidTable)
+AidTibble<-as_tibble(AidTable)
 
 WikiGDP<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)")
 GDPNodes<- html_nodes(WikiGDP, css="table")
-GDPTable<- html_table(GDPNodes, header=TRUE, fill=TRUE)[[2]]
-view(GDPTable)
+GDPTable<- html_table(GDPNodes, header=TRUE, fill=TRUE)[[3]]
+GDPTib<-as_tibble(GDPTable, .name_repair = "unique")
+GDPTibble<-GDPTib%>%
+  slice(2:n())%>%
+  slice(-2)%>%
+  mutate(`Country/Territory`= str_replace_all(`Country/Territory`,"(\\[.*\\]$)", ""))
 
 WikiLife<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_life_expectancy")
 LifeNodes<- html_nodes(WikiLife, css="table")
 LifeTable<- html_table(LifeNodes, header=TRUE, fill=TRUE)[[1]]
-view(LifeTable)
+LifeTibble<-as_tibble(LifeTable)
+
 
 WikiGini<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_income_equality")
 GiniNodes<- html_nodes(WikiGini, css="table")
 GiniTable<- html_table(GiniNodes, header=TRUE, fill=TRUE)[[4]]
+GiniTib<-as_tibble(GiniTable, .rows = , .name_repair = "unique")
+GiniTibble<-GiniTib%>%
+  rename("WorldBankGini"= `World Bank Gini [3]...4`)%>%
+  mutate(WorldBankGini= str_replace_all(WorldBankGini,"(..\\]$)", ""))%>%
+  slice(3:n())
+  #Code for later after joining
+  gather(key = "Organization", value = "GiniCoefficient", c(2,3,4,6,8))%>%
+  view
 ```
