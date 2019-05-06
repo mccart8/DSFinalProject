@@ -78,6 +78,7 @@ LifeTibble<-as_tibble(LifeTable)
 WikiGini<-read_html("https://en.wikipedia.org/wiki/List_of_countries_by_income_equality")
 GiniNodes<- html_nodes(WikiGini, css="table")
 GiniTable<- html_table(GiniNodes, header=TRUE, fill=TRUE)[[4]]
+<<<<<<< HEAD
 GiniTib<-as_tibble(GiniTable, .rows = , .name_repair = "unique")
 GiniTibble<-GiniTib%>%
   rename("WorldBankGini"= `World Bank Gini [3]...4`)%>%
@@ -86,4 +87,13 @@ GiniTibble<-GiniTib%>%
   #Code for later after joining
   gather(key = "Organization", value = "GiniCoefficient", c(2,3,4,6,8))%>%
   view
+=======
+
+WikiLiteracy<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_literacy_rate")
+LiteracyNodes<- html_nodes(WikiLiteracy, css="table")
+LiteracyTable<- html_table(LiteracyNodes, header=TRUE, fill=TRUE)[[3]]
+view(LiteracyTable)
+
+
+>>>>>>> d15670ebed8c6e45f88bd909d34d395b4e89ee10
 ```
