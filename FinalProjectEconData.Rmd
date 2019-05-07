@@ -134,4 +134,14 @@ WorldTibble <- world_data %>%
     MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
 Population= 9
 
+DRCTib<-WorldTibble%>%
+  mutate(Country = ifelse(Country %in% c("Congo (Kinshasha)", "Congo, Dem. Republic", "Congo, Democratic Republic of the", "Democratic Republic of the Congo", "DR Congo", "Congo, Dem. Rep."), "Congo (Kinshasha)", Country),
+         Country = ifelse(Country =="Congo (Kinshasha)", )%>%
+  filter(Country == "Congo (Kinshasha)")%>%
+  fill(everything() , .direction="up")%>%
+  slice(1)%>%
+  view
+
+view(TrueWorldTib)
+
 ```
