@@ -122,8 +122,7 @@ WorldTibble <- world_data %>%
            MilitaryAssist= "Military Assistance FY2017, $US millions",
            GiniCoef= "WorldBankGini",
            AnnualMinWage= "Annual...3",
-           HourlyMinWage= "Hourly...6")%>%
-  filter(!is.na(EconomicMilitaryAssist))
+           HourlyMinWage= "Hourly...6")
 
 
 
@@ -133,5 +132,19 @@ WorldTibble <- world_data %>%
 
 MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
 Population= 9
+
+DRCTib<-WorldTibble%>%
+  mutate(Country = ifelse(Country %in% c("Congo (Kinshasha)", "Congo, Dem. Republic", "Congo, Democratic Republic of the", "Democratic Republic of the Congo", "DR Congo", "Congo, Dem. Rep."), "DRC", Country))%>%
+  filter(Country == "DRC")%>%
+  fill(everything() , .direction="up")%>%
+  slice(1)%>%
+  view
+
+TrueWorldTib<-rbind(DRCTib, WorldTibble)
+
+AidWorldTib<-TrueWorldTib%>%
+  filter(!is.na(EconomicMilitaryAssist))%>%
+  slice(-22)
+
 
 ```
