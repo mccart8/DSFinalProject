@@ -90,8 +90,7 @@ GiniTibble<-GiniTib%>%
   mutate(WorldBankGini= str_replace_all(WorldBankGini,"(..\\]$)", ""))%>%
   slice(3:n())
   #Code for later after joining
-  gather(key = "Organization", value = "GiniCoefficient", c(2,3,4,6,8))%>%
-  view
+  
 
 WikiLiteracy<- read_html("https://en.wikipedia.org/wiki/List_of_countries_by_literacy_rate")
 LiteracyNodes<- html_nodes(WikiLiteracy, css="table")
@@ -112,15 +111,27 @@ world_data<- AidTibble%>%
   full_join(WageTibble, c("Country"= "Country"))%>%
   full_join(LiteracyTibble, c("Country"="X1"))
   
-WorldTibble<- world_data%>%
+WorldTibble <- world_data %>%
     select(1:6, 9, 11, 16, 21, 23, 25, 28, 34, 40, 43, 47, 49, 51)%>%
     rename(YouthLitRate= "X2",
            AdultLitRate= "X4",
            ElderlyLitRate= "X6",
            EconomicMilitaryAssist= "Economic and Military Assistance FY 2017, $US millions",
            AidperCapita= "Aid received per capita FY 2017, $US",
-           )%>%
+           EconAssist= "Economic Assistance FY 2017, $US millions",
+           MilitaryAssist= "Military Assistance FY2017, $US millions",
+           GiniCoef= "WorldBankGini",
+           AnnualMinWage= "Annual...3",
+           HourlyMinWage= "Hourly...6")%>%
   filter(!is.na(EconomicMilitaryAssist))
 
+
+
+
+
+
+
+    MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
+Population= 9
 
 ```
