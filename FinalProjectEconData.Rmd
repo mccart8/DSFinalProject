@@ -56,7 +56,7 @@ PopulationTibble<-PopulationTib%>%
 WikiMinimumWage<- read_html("https://en.wikipedia.org/wiki/List_of_minimum_wages_by_country")
 WageNodes<- html_nodes(WikiMinimumWage, css="table")
 WageTable<-html_table(WageNodes, header=TRUE, fill=TRUE)[[1]]
-WageTib<-as_tibble(WageTable, .name_repair = "minimal")
+WageTib<-as_tibble(WageTable, .name_repair = "unique")
 WageTibble<-WageTib%>%
   slice(2:n())
 
@@ -99,4 +99,28 @@ LiteracyTable<- html_table(LiteracyNodes, header=FALSE, fill=TRUE)[[3]]
 LiteracyTib<-as_tibble(LiteracyTable, .name_repair = "unique")
 LiteracyTibble<-LiteracyTib%>%
   slice(-2)
+
+
+world_data<- AidTibble%>%
+  full_join(GDPTibble, c("Country"="Country/Territory"))%>%
+  select(1:5, "GDP(US$million)")%>%
+  full_join(PovertyTibble,c("Country"="Country"))%>%
+  full_join(PopulationTibble, c("Country"="Country or area"))%>%
+  full_join(LifeTibble, c("Country"="Country and regions"))%>%
+  full_join(GiniTibble, c("Country"="Country"))%>%
+  full_join(TaxTibble, c("Country"="Country"))%>%
+  full_join(WageTibble, c("Country"= "Country"))%>%
+  full_join(LiteracyTibble, c("Country"="X1"))
+  
+WorldTibble<- world_data%>%
+    select(1:6, 9, 11, 16, 21, 23, 25, 28, 34, 40, 43, 47, 49, 51)%>%
+    rename(YouthLitRate= "X2",
+           AdultLitRate= "X4",
+           ElderlyLitRate= "X6",
+           EconomicMilitaryAssist= "Economic and Military Assistance FY 2017, $US millions",
+           AidperCapita= "Aid received per capita FY 2017, $US",
+           )%>%
+  filter(!is.na(EconomicMilitaryAssist))
+
+
 ```
