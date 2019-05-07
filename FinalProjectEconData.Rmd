@@ -131,7 +131,7 @@ WorldTibble <- world_data %>%
 
 
 
-    MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
+MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
 Population= 9
 
 ```
