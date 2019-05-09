@@ -156,6 +156,11 @@ AidWorldTib<-TrueWorldTib%>%
          AnnualMinWage = ifelse(AnnualMinWage == "", NA, AnnualMinWage))%>%
   view
 <<<<<<< HEAD
+
+write.csv(AidWorldTib, "~/Mscs 264 S19/Submit/DSFinalProject/AidWorldTib.csv")
+```
+=======
+<<<<<<< HEAD
   
          
 ```
@@ -164,3 +169,4 @@ AidWorldTib<-TrueWorldTib%>%
 =======
 ```
 >>>>>>> 08293cb199802c813567145799e5a0079c5266d8
+>>>>>>> 21615547c77d966d4427a0d9ac3edc86fe9bf539
