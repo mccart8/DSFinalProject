@@ -2,7 +2,8 @@
 title: "MapsTest"
 author: "Zach"
 date: "5/9/2019"
-output: html_document
+runtime: shiny
+output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -27,7 +28,7 @@ AidWorldTib <- read.csv("/home/rstudio/courses/2018-19-semester2-mscs-264/Inclas
 titlePanel("Aid per country")
 
 inputPanel(
-  selectinput("y", label= "y-axis variable:",
+  selectInput("y", label= "y-axis variable:",
               choices= c("Total Aid"= "EconomicMilitaryAssist",
                          "Economic Aid"= "EconAssist",
                          "Military Aid"="MilitaryAssist",
@@ -37,6 +38,7 @@ renderPlot(
   ggplot(AidWorldTib, aes(x=Country, y=input$y))+
     geom_bar(stat="identity")
 )
+
 
 
 
