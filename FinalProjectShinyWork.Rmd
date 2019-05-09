@@ -20,6 +20,26 @@ library(readr)
 ```
 
 ```{r}
-AidWorldTib <- read_csv("~/Mscs 264 S19/Submit/DSFinalProject/AidWorldTib.csv")s
+AidWorldTib <- read.csv("/home/rstudio/courses/2018-19-semester2-mscs-264/Inclass/AidWorldTib.csv")
+```
+
+```{r}
+titlePanel("Aid per country")
+
+inputPanel(
+  selectinput("y", label= "y-axis variable:",
+              choices= c("Total Aid"= "EconomicMilitaryAssist",
+                         "Economic Aid"= "EconAssist",
+                         "Military Aid"="MilitaryAssist",
+                         "Aid per Capita"= "AidperCapita"))
+)
+renderPlot(
+  ggplot(AidWorldTib, aes(x=Country, y=input$y))+
+    geom_bar(stat="identity")
+)
+
+
+
+
 ```
 
