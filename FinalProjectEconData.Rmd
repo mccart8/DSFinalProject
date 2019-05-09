@@ -148,9 +148,8 @@ AidWorldTib<-TrueWorldTib%>%
          GDP = parse_number(as.character(`GDP(US$million)`)),
          PercentPoverty = parse_number(as.character(PercentPoverty)),
          Population = parse_number(as.character(Population)),
-         CorporateTax = ifelse(`Corporate tax` == "N/A
-", NA, `Corporate tax`),
-         CorporateTax= parse_number(as.character(CorporateTax)),
+         `Corporate tax`= ifelse(as.character(`Corporate tax`)=="N/A", NA, `Corporate tax`),
+         CorporateTax= parse_number(as.character(`Corporate tax`)),
          AnnualMinWage = parse_number(as.character(AnnualMinWage)),
          AnnualMinWage = ifelse(AnnualMinWage == "", NA, AnnualMinWage))%>%
   view
