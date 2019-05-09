@@ -21,6 +21,17 @@ library(readr)
 
 ```{r}
 AidWorldTib <- read.csv("/home/rstudio/courses/2018-19-semester2-mscs-264/Inclass/AidWorldTib.csv")
+
+world <- map_data("world")%>% 
+  rename(place = region)%>%
+  mutate(place = ifelse(place == "Democratic Republic of the Congo", "DRC", place))
+
+AidWorldTib <- read_csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")
+view(AidWorldTib)
+
+aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
+view(aiddata)
+
 ```
 
 ```{r}
@@ -38,7 +49,23 @@ renderPlot(
     geom_bar(stat="identity")
 )
 
+titlePanel("World Map")
 
+inputPanel(
+  selectinput("x", label = "Variable:",
+              choices = c("Total Aid"= "EconomicMilitaryAssist",
+                         "Aid per Capita"= "AidperCapita",
+                         "GDP per Capita" = "GDPperCapita",
+                         "Percent in Poverty" = "Percent Poverty",
+                         "Life Expectancy" = "Both sexes lifeexpectency (HALE)",
+                         "Gini Coefficient" = "GiniCoef",
+                         "Corporate Tax Rate" = "CorporateTax")
+              )
+)
+renderPlot(
+  ggplot()+
+    
+)
 
 
 ```
