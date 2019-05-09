@@ -20,7 +20,6 @@ library(readr)
 ```
 
 ```{r}
-AidWorldTib <- read_csv("~/Mscs 264 S19/Submit/DSFinalProject/AidWorldTib.csv")
-view(AidWorldTib)
+AidWorldTib <- read_csv("~/Mscs 264 S19/Submit/DSFinalProject/AidWorldTib.csv")s
 ```
 
