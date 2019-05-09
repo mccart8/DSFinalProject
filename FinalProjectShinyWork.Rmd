@@ -1,9 +1,9 @@
 ---
 title: "MapsTest"
-author: "Zach"
+author: "Zach and Natalie"
 date: "5/9/2019"
-runtime: shiny
-output: ioslides_presentation
+DisplayMode: Showcase
+Type: Shiny
 ---
 
 ```{r setup, include=FALSE}
