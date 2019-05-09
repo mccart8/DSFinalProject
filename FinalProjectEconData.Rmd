@@ -17,6 +17,8 @@ gdp, life expectancy, gov debt, gini coefficient, literacy rate, years since hos
 library(tidyverse)
 library(rvest)
 library(httr)
+library(shiny)
+library(ggplot2)
 ```
 
 
@@ -125,8 +127,7 @@ WorldTibble <- world_data %>%
            AnnualMinWage= "Annual...3",
            HourlyMinWage= "Hourly...6")
 
-    MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
-Population= 9
+
 DRCTib<-WorldTibble%>%
   mutate(Country = ifelse(Country %in% c("Congo (Kinshasha)", "Congo, Dem. Republic", "Congo, Democratic Republic of the", "Democratic Republic of the Congo", "DR Congo", "Congo, Dem. Rep."), "DRC", Country))%>%
   filter(Country == "DRC")%>%
@@ -154,6 +155,4 @@ AidWorldTib<-TrueWorldTib%>%
          AnnualMinWage = parse_number(as.character(AnnualMinWage)),
          AnnualMinWage = ifelse(AnnualMinWage == "", NA, AnnualMinWage))%>%
   view
-  
-         
 ```
