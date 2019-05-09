@@ -17,6 +17,8 @@ gdp, life expectancy, gov debt, gini coefficient, literacy rate, years since hos
 library(tidyverse)
 library(rvest)
 library(httr)
+library(shiny)
+library(ggplot2)
 ```
 
 
@@ -153,8 +155,12 @@ AidWorldTib<-TrueWorldTib%>%
          AnnualMinWage = parse_number(as.character(AnnualMinWage)),
          AnnualMinWage = ifelse(AnnualMinWage == "", NA, AnnualMinWage))%>%
   view
+<<<<<<< HEAD
   
          
 ```
 
 
+=======
+```
+>>>>>>> 08293cb199802c813567145799e5a0079c5266d8
