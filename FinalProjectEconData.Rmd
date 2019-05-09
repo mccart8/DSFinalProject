@@ -2,7 +2,8 @@
 title: "FinalProjectEconData"
 author: "Zach"
 date: "5/2/2019"
-output: html_document
+runtime: shiny
+output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -125,26 +126,35 @@ WorldTibble <- world_data %>%
            HourlyMinWage= "Hourly...6")
 
 
-
-
-
-
-
-MaleFemaleLifeExp= "Both sexes lifeexpectancy(HALE)"
-Population= 9
-
 DRCTib<-WorldTibble%>%
   mutate(Country = ifelse(Country %in% c("Congo (Kinshasha)", "Congo, Dem. Republic", "Congo, Democratic Republic of the", "Democratic Republic of the Congo", "DR Congo", "Congo, Dem. Rep."), "DRC", Country))%>%
   filter(Country == "DRC")%>%
   fill(everything() , .direction="up")%>%
-  slice(1)%>%
-  view
+  slice(1)
 
 TrueWorldTib<-rbind(DRCTib, WorldTibble)
 
 AidWorldTib<-TrueWorldTib%>%
   filter(!is.na(EconomicMilitaryAssist))%>%
-  slice(-22)
-
-
+  slice(-22)%>%
+  rename("PercentPoverty" = lessthan_5.50,
+         "Population" = `Population(1 July 2017)[3]`)%>%
+  mutate_all(type.convert)%>%
+  mutate(Country = as.character(Country),
+         Continent = as.character(Continent),
+         EconomicMilitaryAssist = parse_number(as.character(EconomicMilitaryAssist)),
+         EconAssist= parse_number(as.character(EconAssist)),
+         MilitaryAssist = parse_number(as.character(MilitaryAssist)),
+         GDP = parse_number(as.character(`GDP(US$million)`)),
+         PercentPoverty = parse_number(as.character(PercentPoverty)),
+         Population = parse_number(as.character(Population)),
+         `Corporate tax`= ifelse(as.character(`Corporate tax`)=="N/A", NA, `Corporate tax`),
+         CorporateTax= parse_number(as.character(`Corporate tax`)),
+         AnnualMinWage = parse_number(as.character(AnnualMinWage)),
+         AnnualMinWage = ifelse(AnnualMinWage == "", NA, AnnualMinWage))%>%
+  view
+  
+         
 ```
+
+
