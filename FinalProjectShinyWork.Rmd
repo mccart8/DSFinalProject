@@ -30,8 +30,8 @@ world <- map_data("world")%>%
 AidWorldTib <- read_csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")
 view(AidWorldTib)
 
-aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
-view(aiddata)
+#aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
+#view(aiddata)
 
 ```
 
@@ -53,7 +53,7 @@ renderPlot(
 titlePanel("World Map")
 
 inputPanel(
-  selectinput("x", label = "Variable:",
+  selectInput("x", label = "Variable:",
               choices = c("Total Aid"= "EconomicMilitaryAssist",
                          "Aid per Capita"= "AidperCapita",
                          "GDP per Capita" = "GDPperCapita",
@@ -63,10 +63,10 @@ inputPanel(
                          "Corporate Tax Rate" = "CorporateTax")
               )
 )
-renderPlot(
-  ggplot()+
+#renderPlot(
+  #ggplot()+
     
-)
+#)
 
 
 
