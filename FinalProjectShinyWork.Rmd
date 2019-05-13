@@ -21,6 +21,7 @@ library(ggplot2)
 library(maps)
 library(readr)
 library(AER)
+library(dplyr)
 ```
 
 ```{r}
@@ -38,8 +39,8 @@ world <- map_data("world")%>%
   rename(place = region)%>%
   mutate(place = ifelse(place == "Democratic Republic of the Congo", "DRC", place))
 
-AidWorldTib <- read_csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
+?right_join
 
 
 ```
