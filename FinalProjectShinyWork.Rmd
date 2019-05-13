@@ -24,7 +24,15 @@ library(AER)
 ```
 
 ```{r}
-AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")
+AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
+  select(-X,-`GDP.US.million.`, -`Corporate.tax`, -AnnualMinWage)%>%
+  mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE)/3),
+         OverAverageLit = ifelse(TotalLiteracy>= 91, "Yes", "No"),
+         OverAverageLife = ifelse(`Both.sexes.lifeexpectancy..HALE.`>=71.5, "Yes", "No"))%>%
+  rename("TotalExpectancy" = `Both.sexes.lifeexpectancy..HALE.`,
+         "FemaleExpectancy"= `Female.life.expectancy`,
+         "MaleExpectancy" = `Male.life.expectancy`)%>%
+  view
 
 world <- map_data("world")%>% 
   rename(place = region)%>%
@@ -50,24 +58,6 @@ renderPlot({
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
 titlePanel("World Map")
-
-
-
-
-inputPanel(
-  selectInput("x", label = "Variable:",
-              choices = c("Total Aid"= "EconomicMilitaryAssist",
-                         "Aid per Capita"= "AidperCapita",
-                         "GDP per Capita" = "GDPperCapita",
-                         "Percent in Poverty" = "Percent Poverty",
-                         "Life Expectancy" = "Both sexes lifeexpectency (HALE)",
-                         "Gini Coefficient" = "GiniCoef",
-                         "Corporate Tax Rate" = "CorporateTax")
-
-              )
-)
-
-
 renderPlot({
   ggplot() + 
   geom_polygon(data = aidmapdata, aes_string(x='long', y = 'lat', group = 'group', fill = input$y)) + 
