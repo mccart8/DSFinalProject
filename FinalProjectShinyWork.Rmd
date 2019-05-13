@@ -76,12 +76,12 @@ renderPlot({
 }
 )
 
+titlePanel("Aid per Country vs. Social Indicators")
 
-inputPanel(selectInput("YAxis", "Factors:",
-           choices= c("Total Aid"= "EconomicMilitaryAssist",
-                         "Economic Aid"= "EconAssist",
-                         "Military Aid"="MilitaryAssist",
-                         "Aid per Capita"= "AidperCapita")))
+inputPanel(selectInput("YAxis", "Social Indicator:",
+           choices= c("Female Life Expectancy"= "Female life expectancy",
+                         "Male Life Expectancy"= "Male life expectancy"
+                         )))
 inputPanel(selectInput("XAxis", "Type of Aid:",
            choices= c("Total Aid"= "EconomicMilitaryAssist",
                          "Economic Aid"= "EconAssist",
@@ -91,5 +91,24 @@ renderPlot({
   ggplot(AidWorldTib, aes_string(x= input$XAxis, y = input$YAxis))+
     geom_point(aes(color = Continent))
 })
+
+titlePanel("Aid per Country vs. Economic Indicators")
+
+inputPanel(selectInput("YAxis", "Economic Indicator:",
+           choices= c("GDP in US Millions"= "GDP",
+                         "Gini Coefficient"= "GiniCoef",
+                         "Hourly Minimum Wage"="HourlyMinWage"
+                         )))
+inputPanel(selectInput("XAxis", "Type of Aid:",
+           choices= c("Total Aid"= "EconomicMilitaryAssist",
+                         "Economic Aid"= "EconAssist",
+                         "Military Aid"="MilitaryAssist",
+                         "Aid per Capita"= "AidperCapita")))
+renderPlot({
+  ggplot(AidWorldTib, aes_string(x= input$XAxis, y = input$YAxis))+
+    geom_point(aes(color = Continent))
+})
+
+
 ```
 
