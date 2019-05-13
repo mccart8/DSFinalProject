@@ -28,18 +28,21 @@ AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
   select(-X,-`GDP.US.million.`, -`Corporate.tax`, -AnnualMinWage)%>%
   mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE)/3),
          OverAverageLit = ifelse(TotalLiteracy>= 91, "Yes", "No"),
-         OverAverageLife = ifelse(`Both.sexes.lifeexpectancy..HALE.`>=71.5, "Yes", "No"))%>%
+         OverAverageLife = ifelse(`Both.sexes.lifeexpectancy..HALE.`>=71.5, "Yes", "No"),
+         OverAveragePoverty = ifelse(PercentPoverty>=35, "Yes", "No"),
+         EconAidPerCapita = (EconAssist*1000000/Population),
+         MilAidPerCapita = (MilitaryAssist*1000000/Population))%>%
   rename("TotalExpectancy" = `Both.sexes.lifeexpectancy..HALE.`,
          "FemaleExpectancy"= `Female.life.expectancy`,
-         "MaleExpectancy" = `Male.life.expectancy`)
-
+         "MaleExpectancy" = `Male.life.expectancy`)%>%
+  view
 world <- map_data("world")%>% 
   rename(place = region)%>%
   mutate(place = ifelse(place == "Democratic Republic of the Congo", "DRC", place))
 
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
 
-
+outliers<-
 ```
 
 ```{r}
@@ -52,7 +55,7 @@ inputPanel(selectInput("y", label= "y-axis variable:",
 )
 renderPlot({
   ggplot(AidWorldTib, mapping = aes_string(x='Country', y= input$y))+
-    geom_col(aes(fill = 'Continent'))+
+    geom_col(aes(fill = Continent))+
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
 titlePanel("World Map")
