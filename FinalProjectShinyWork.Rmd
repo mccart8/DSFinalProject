@@ -12,7 +12,7 @@ runtime: shiny
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include = FALSE}
 library(tidyverse)
 library(rvest)
 library(httr)
@@ -32,14 +32,7 @@ world <- map_data("world")%>%
 
 AidWorldTib <- read_csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")
 
-
-<<<<<<< HEAD
-#aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
-#view(aiddata)
-=======
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
-
->>>>>>> c787fdb8524f97a8a0f0a7c5d3d2cb900b8ce46f
 
 ```
 
@@ -56,10 +49,7 @@ renderPlot({
     geom_col()+
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
-
 titlePanel("World Map")
-
-<<<<<<< HEAD
 inputPanel(
   selectInput("x", label = "Variable:",
               choices = c("Total Aid"= "EconomicMilitaryAssist",
@@ -69,33 +59,22 @@ inputPanel(
                          "Life Expectancy" = "Both sexes lifeexpectency (HALE)",
                          "Gini Coefficient" = "GiniCoef",
                          "Corporate Tax Rate" = "CorporateTax")
-              )
-)
-#renderPlot(
-  #ggplot()+
-    
-#)
-=======
+              ))
 renderPlot({
   ggplot() + 
   geom_polygon(data = aidmapdata, aes_string(x='long', y = 'lat', group = 'group', fill = input$y)) + 
   coord_fixed(1.3)
-}
-)
->>>>>>> c787fdb8524f97a8a0f0a7c5d3d2cb900b8ce46f
-
+})
 inputPanel(selectInput("YAxis", "Factors:",
            choices= c("Total Aid"= "EconomicMilitaryAssist",
                          "Economic Aid"= "EconAssist",
                          "Military Aid"="MilitaryAssist",
                          "Aid per Capita"= "AidperCapita")))
-
 inputPanel(selectInput("XAxis", "Type of Aid:",
            choices= c("Total Aid"= "EconomicMilitaryAssist",
                          "Economic Aid"= "EconAssist",
                          "Military Aid"="MilitaryAssist",
                          "Aid per Capita"= "AidperCapita")))
-
 renderPlot({
   ggplot(AidWorldTib, aes_string(x= input$XAxis, y = input$YAxis))+
     geom_point(aes(color = Continent))
