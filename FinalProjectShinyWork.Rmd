@@ -32,8 +32,7 @@ AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
          OverAverageLife = ifelse(`Both.sexes.lifeexpectancy..HALE.`>=71.5, "Yes", "No"))%>%
   rename("TotalExpectancy" = `Both.sexes.lifeexpectancy..HALE.`,
          "FemaleExpectancy"= `Female.life.expectancy`,
-         "MaleExpectancy" = `Male.life.expectancy`)%>%
-  view
+         "MaleExpectancy" = `Male.life.expectancy`)
 
 world <- map_data("world")%>% 
   rename(place = region)%>%
@@ -55,7 +54,7 @@ inputPanel(selectInput("y", label= "y-axis variable:",
 )
 renderPlot({
   ggplot(AidWorldTib, mapping = aes_string(x='Country', y= input$y))+
-    geom_col()+
+    geom_col(aes(fill = 'Continent'))+
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
 titlePanel("World Map")
@@ -70,8 +69,8 @@ renderPlot({
 titlePanel("Aid per Country vs. Social Indicators")
 
 inputPanel(selectInput("YAxis", "Social Indicator:",
-           choices= c("Female Life Expectancy"= "Female life expectancy",
-                         "Male Life Expectancy"= "Male life expectancy"
+           choices= c("Female Life Expectancy"= "FemaleExpectancy",
+                         "Male Life Expectancy"= "MaleExpectancy"
                          )))
 inputPanel(selectInput("XAxis", "Type of Aid:",
            choices= c("Total Aid"= "EconomicMilitaryAssist",
