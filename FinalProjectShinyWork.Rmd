@@ -45,25 +45,24 @@ world <- map_data("world")%>%
 
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
 
-<<<<<<< HEAD
-=======
+
 totaloutlier<-AidWorldTib%>%
   filter(AidperCapita >100)
 
-militaryoutlier
->>>>>>> 35e73da035ad04867df0c84a342750a956a3203f
 
 
 ```
 
 ```{r}
 titlePanel("Aid per country")
+
 inputPanel(selectInput("y", label= "y-axis variable:",
-              choices= c("Total Aid"= "EconomicMilitaryAssist",
+           choices= c("Total Aid"= "EconomicMilitaryAssist",
                          "Economic Aid"= "EconAssist",
                          "Military Aid"="MilitaryAssist",
                          "Aid per Capita"= "AidperCapita"))
 )
+
 renderPlot({
   ggplot(AidWorldTib, mapping = aes_string(x='Country', y= input$y))+
     geom_col(aes(fill = Continent))+
@@ -76,7 +75,6 @@ renderPlot({
   coord_fixed(1.3) +
     labs(x= "Longitude",
          y= "Latitude")
-
 }
 )
 
@@ -106,29 +104,10 @@ inputPanel(selectInput("YAxis2", "Economic Indicator:",
                          "Hourly Minimum Wage"="HourlyMinWage"
                          )))
 inputPanel(selectInput("XAxis2", "Type of Aid:",
-<<<<<<< HEAD
+
            choices= c("Economic Aid per Capita"= "EconAidPerCapita",
                          "Military Aid per Capita"="MilAidPerCapita",
                          "Total Aid per Capita"= "AidperCapita")))
-=======
-           choices= c("Total Aid"= "EconomicMilitaryAssist",
-                         "Economic Aid"= "EconAidPerCapita",
-                         "Military Aid"="MilAidPerCapita",
-                         "Aid per Capita"= "AidperCapita")))
->>>>>>> 35e73da035ad04867df0c84a342750a956a3203f
-renderPlot({
-  if(input$XAxis2 == "Aid per Capita")
-  ggplot(AidWorldTib, aes_string(x= input$XAxis2, y = input$YAxis2))+
-    geom_point(aes(color = Continent))+
-<<<<<<< HEAD
-    labs(x= "Type of Aid per Capita",
-=======
-    geom_text(aes(label = Country), data = outlier)+
-    labs(x= "Type of Aid",
->>>>>>> 35e73da035ad04867df0c84a342750a956a3203f
-         y= "Economic Indicator")
-  else
-})
 
 titlePanel("Social Indicators vs. Type of Aid")
 
@@ -147,6 +126,12 @@ renderPlot({
     labs(x= "Above Average?",
          y= "Selected Aid per Capita")
 })
+
+mainPanel(
+fluidRow("Above Average Literacy Rate? determines whether the country is above or below the global literacy rate, which is 91%."), 
+fluidRow("Above Average Life Expectancy Rate? determines whether or not a country is above the global average of the life expectancy rate. Out of all the contries that recieve funding, only one country, Isreal, is above the life expectancy rate and they only recieve Military Aid, not Economic Aid.
+
+Above"))
 
 
 ```
