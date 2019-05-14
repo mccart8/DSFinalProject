@@ -72,6 +72,12 @@ renderPlot({
     geom_col(aes(fill = Continent))+
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 })
+
+mainPanel(
+  fluidRow("This plot helps visualize how much Economic and Military Aid countries recieve from the US. It also displays combined military and economic and combine military and economic aid per capita. The bars are colored by contitent to help visualize where US monetary aid goes.")
+)
+
+
 titlePanel("World Map")
 renderPlot({
   ggplot() + 
@@ -99,6 +105,7 @@ renderPlot({
     labs(x= "Type of Aid per Capita",
          y= "Social Indicator")
 })
+mainPanel("This graph displays life expectancies for Males, Females, and both genders when considering the different aids per capita. We were interesed in looking at life expectancy and aid to see if there was a relationship with how much aid countries recieve and their life expectancy.")
 
 titlePanel("Aid per Country vs. Economic Indicators")
 
@@ -142,10 +149,9 @@ renderPlot({
 })
 
 mainPanel(
-fluidRow("Above Average Literacy Rate? determines whether the country is above or below the global literacy rate, which is 91%."), 
-fluidRow("Above Average Life Expectancy Rate? determines whether or not a country is above the global average of the life expectancy rate. Out of all the contries that recieve funding, only one country, Isreal, is above the life expectancy rate and they only recieve Military Aid, not Economic Aid.
-
-Above"))
+fluidRow("Above Average Literacy Rate? displays whether the country is above or below the global literacy rate, which is 91%."), 
+fluidRow("Above Average Life Expectancy Rate? displays whether or not a country is above the global average of the life expectancy rate. Out of all the contries that recieve funding, only one country, Isreal, is above the life expectancy rate and they only recieve Military Aid, not Economic Aid."),
+fluidRow("Above Average Poverty Rate? displays whether or not a country is above"))
 
 
 ```
