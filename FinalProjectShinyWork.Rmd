@@ -58,7 +58,7 @@ outlier<- AidWorldTib%>%
 
 ```{r}
 mainPanel(
-  fluidrow("For our project we wanted to explore the qualities of countries that US foreign aid is provided to. Our main reasoning behind this is that the term 'foreign aid' is often misunderstood and over generalized. While the United States provides a great amount of material aid and personnel aid around the world, we often forget that direct monetary compensation does make up a degree of our comitments as well. Overall, we examined how a vareity of social and economic factors are impacted by the amount of foreign aid the US provided, broken down by total, military, and economic aid. To accomplish this, we used the rvest and httr packages to scrape, and tidyverse, ggplot2, maps, readr, dplyr, and shiny to visualize the data. We pulled all our data off of wikipedia, and have linked the websites below.")
+  fluidRow("For our project we wanted to explore the qualities of countries that US foreign aid is provided to. Our main reasoning behind this is that the term 'foreign aid' is often misunderstood and over generalized. While the United States provides a great amount of material aid and personnel aid around the world, we often forget that direct monetary compensation does make up a degree of our comitments as well. Overall, we examined how a vareity of social and economic factors are impacted by the amount of foreign aid the US provided, broken down by total, military, and economic aid. To accomplish this, we used the rvest and httr packages to scrape, and tidyverse, ggplot2, maps, readr, dplyr, and shiny to visualize the data. We pulled all our data off of wikipedia, and have linked the websites below.")
 )
 titlePanel("Aid per country")
 
@@ -122,7 +122,7 @@ inputPanel(selectInput("XAxis2", "Type of Aid:",
                          "Military Aid per Capita"="MilAidPerCapita",
                          "Total Aid per Capita"= "AidperCapita")))
 mainPanel(
-  fluidrow("We decided to use per capita aid as the standard method of looking at foreign aid. Our primary motivation for was the standard economic practice to measure certain monetary indicators per capita, as it allows comparison among countries. Beyond that it allows us to get a better idea of the scope of the impact the aid is having in the country." 
+  fluidRow("We decided to use per capita aid as the standard method of looking at foreign aid. Our primary motivation for was the standard economic practice to measure certain monetary indicators per capita, as it allows comparison among countries. Beyond that it allows us to get a better idea of the scope of the impact the aid is having in the country." 
   ))
 renderPlot({
   ggplot(AidWorldTib, aes_string(x= input$XAxis2, y = input$YAxis2))+
