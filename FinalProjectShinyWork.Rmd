@@ -27,8 +27,10 @@ library(dplyr)
 ```{r}
 AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
   select(-X,-`GDP.US.million.`, -`Corporate.tax`, -AnnualMinWage)%>%
-  mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE)/3),
-         OverAverageLit = ifelse(TotalLiteracy>= 91, "Yes", "No"),
+  group_by(Country)%>%
+  mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE))/3)%>%
+  ungroup%>%
+  mutate(OverAverageLit = ifelse(TotalLiteracy>= 91, "Yes", "No"),
          OverAverageLife = ifelse(`Both.sexes.lifeexpectancy..HALE.`>=71.5, "Yes", "No"),
          OverAveragePoverty = ifelse(PercentPoverty>=35, "Yes", "No"),
          EconAidPerCapita = (EconAssist*1000000/Population),
@@ -44,7 +46,12 @@ world <- map_data("world")%>%
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
 ?right_join
 
-outliers<-
+totaloutlier<-AidWorldTib%>%
+  filter(AidperCapita >100)
+
+militaryoutlier
+
+
 ```
 
 ```{r}
@@ -99,14 +106,17 @@ inputPanel(selectInput("YAxis2", "Economic Indicator:",
                          )))
 inputPanel(selectInput("XAxis2", "Type of Aid:",
            choices= c("Total Aid"= "EconomicMilitaryAssist",
-                         "Economic Aid"= "EconAssist",
-                         "Military Aid"="MilitaryAssist",
+                         "Economic Aid"= "EconAidPerCapita",
+                         "Military Aid"="MilAidPerCapita",
                          "Aid per Capita"= "AidperCapita")))
 renderPlot({
+  if(input$XAxis2 == "Aid per Capita")
   ggplot(AidWorldTib, aes_string(x= input$XAxis2, y = input$YAxis2))+
     geom_point(aes(color = Continent))+
+    geom_text(aes(label = Country), data = outlier)+
     labs(x= "Type of Aid",
          y= "Economic Indicator")
+  else
 })
 
 
