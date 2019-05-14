@@ -44,12 +44,9 @@ world <- map_data("world")%>%
   mutate(place = ifelse(place == "Democratic Republic of the Congo", "DRC", place))
 
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
-?right_join
 
-totaloutlier<-AidWorldTib%>%
-  filter(AidperCapita >100)
-
-militaryoutlier
+outlier<- AidWorldTib%>%
+  filter(EconAidPerCapita>100 | MilAidPerCapita >100 | AidperCapita >100)
 
 
 ```
@@ -105,19 +102,15 @@ inputPanel(selectInput("YAxis2", "Economic Indicator:",
                          "Hourly Minimum Wage"="HourlyMinWage"
                          )))
 inputPanel(selectInput("XAxis2", "Type of Aid:",
-           choices= c("Total Aid"= "EconomicMilitaryAssist",
+           choices= c("Aid per Capita"= "AidperCapita",
                          "Economic Aid"= "EconAidPerCapita",
-                         "Military Aid"="MilAidPerCapita",
-                         "Aid per Capita"= "AidperCapita")))
+                         "Military Aid"="MilAidPerCapita"
+                         )))
 renderPlot({
-  if(input$XAxis2 == "Aid per Capita")
   ggplot(AidWorldTib, aes_string(x= input$XAxis2, y = input$YAxis2))+
     geom_point(aes(color = Continent))+
-    geom_text(aes(label = Country), data = outlier)+
-    labs(x= "Type of Aid",
-         y= "Economic Indicator")
-  else
-})
+    geom_text(aes(label = Country), data = outlier)
+    })
 
 
 ```
