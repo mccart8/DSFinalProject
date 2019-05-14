@@ -1,9 +1,7 @@
 ---
-title: "MapsTest"
-author: "Zach and Natalie"
-date: "5/9/2019"
-DisplayMode: Showcase
-Type: Shiny
+title: "Who gets Aid?- Examining US Foreign Aid"
+author: "Natalie and Zach"
+date: "5/14/2019"
 Output: html_document
 runtime: shiny
 ---
@@ -20,12 +18,11 @@ library(shiny)
 library(ggplot2)
 library(maps)
 library(readr)
-library(AER)
 library(dplyr)
 ```
 
 ```{r}
-AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
+AidWorldTib <- read.csv("AidWorldTib.csv")%>%
   select(-X,-`GDP.US.million.`, -`Corporate.tax`, -AnnualMinWage)%>%
   group_by(Country)%>%
   mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE))/3)%>%
@@ -65,17 +62,18 @@ mainPanel(
 
 titlePanel("Aid per country")
 
-inputPanel(selectInput("y", label= "y-axis variable:",
-           choices= c("Total Aid"= "EconomicMilitaryAssist",
-                         "Economic Aid"= "EconAssist",
-                         "Military Aid"="MilitaryAssist",
+inputPanel(selectInput("y", label= "Y-axis variable:",
+           choices= c("Economic Aid Per Capita"= "EconAidPerCapita",
+                         "Military Aid"="MilAidPerCapita",
                          "Aid per Capita"= "AidperCapita"))
 )
 
 renderPlot({
   ggplot(AidWorldTib, mapping = aes_string(x='Country', y= input$y))+
     geom_col(aes(fill = Continent))+
-    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+    labs(x = "Selected Aid",
+         title = "Examining Aid Per Capita in Each Country")
 })
 
 mainPanel(
@@ -89,7 +87,8 @@ renderPlot({
   geom_polygon(data = aidmapdata, aes_string(x='long', y = 'lat', group = 'group', fill = input$y)) + 
   coord_fixed(1.3) +
     labs(x= "Longitude",
-         y= "Latitude")
+         y= "Latitude",
+         title = "Map Corresponding to Inputs Above")
 }
 )
 
@@ -108,7 +107,8 @@ renderPlot({
   ggplot(AidWorldTib, aes_string(x= input$XAxis, y = input$YAxis))+
     geom_point(aes(color = Continent))+
     labs(x= "Type of Aid per Capita",
-         y= "Social Indicator")
+         y= "Social Indicator",
+         title= "Aid and Life Expectancy by Country")
 })
 mainPanel("This graph displays life expectancies for Males, Females, and the Total per country when considering the different aids per capita. We were interesed in looking at life expectancy and aid to see if there was a relationship with how much aid countries recieve and their life expectancy.")
 
@@ -134,7 +134,8 @@ renderPlot({
     geom_point(aes(color = Continent))+
     geom_text(aes(label = Country), data = outlier)+
     labs(x= "Type of Aid per Capita",
-         y= "Economic Indicator")
+         y= "Economic Indicator",
+         title = "Aid and Economic Indicators by Country")
     })
 
 mainPanel(
@@ -159,7 +160,8 @@ renderPlot({
   ggplot(AidWorldTib, aes_string(x= input$XAxis3, y = input$YAxis3))+
     geom_boxplot()+
     labs(x= "Above Average?",
-         y= "Selected Aid per Capita")
+         y= "Selected Aid per Capita",
+         title = "Measuring Aid in Countries Above and Below Global Average")
 })
 
 mainPanel(
@@ -178,7 +180,6 @@ fluidRow("GDP data: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nomi
 fluidRow("Population data: https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)"),
 fluidRow("Minimum wage data: https://en.wikipedia.org/wiki/List_of_minimum_wages_by_country"),
 fluidRow("Not used, but tax data: https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates"))
-fluidRow("Above Average Poverty Rate? displays whether or not a country is above"))
 
 
 
