@@ -37,19 +37,24 @@ AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
          MilAidPerCapita = (MilitaryAssist*1000000/Population))%>%
   rename("TotalExpectancy" = `Both.sexes.lifeexpectancy..HALE.`,
          "FemaleExpectancy"= `Female.life.expectancy`,
-         "MaleExpectancy" = `Male.life.expectancy`)%>%
-  view
+         "MaleExpectancy" = `Male.life.expectancy`)
+
 world <- map_data("world")%>% 
   rename(place = region)%>%
   mutate(place = ifelse(place == "Democratic Republic of the Congo", "DRC", place))
 
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
 
+<<<<<<< HEAD
 
 totaloutlier<-AidWorldTib%>%
   filter(AidperCapita >100)
 
 
+=======
+outlier<- AidWorldTib%>%
+  filter(EconAidPerCapita>100 | MilAidPerCapita >100 | AidperCapita >100)
+>>>>>>> 7f5c1380e3094d96b6aff096400e0698f8164504
 
 ```
 
@@ -104,10 +109,25 @@ inputPanel(selectInput("YAxis2", "Economic Indicator:",
                          "Hourly Minimum Wage"="HourlyMinWage"
                          )))
 inputPanel(selectInput("XAxis2", "Type of Aid:",
+<<<<<<< HEAD
 
            choices= c("Economic Aid per Capita"= "EconAidPerCapita",
                          "Military Aid per Capita"="MilAidPerCapita",
                          "Total Aid per Capita"= "AidperCapita")))
+=======
+           choices= c("Economic Aid per Capita"= "EconAidPerCapita",
+                         "Military Aid per Capita"="MilAidPerCapita",
+                         "Total Aid per Capita"= "AidperCapita")))
+
+renderPlot({
+  ggplot(AidWorldTib, aes_string(x= input$XAxis2, y = input$YAxis2))+
+    geom_point(aes(color = Continent))+
+    geom_text(aes(label = Country), data = outlier)+
+    labs(x= "Type of Aid per Capita",
+         y= "Economic Indicator")
+    })
+
+>>>>>>> 7f5c1380e3094d96b6aff096400e0698f8164504
 
 titlePanel("Social Indicators vs. Type of Aid")
 
