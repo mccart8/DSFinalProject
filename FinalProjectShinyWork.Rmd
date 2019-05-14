@@ -45,16 +45,15 @@ world <- map_data("world")%>%
 
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
 
-<<<<<<< HEAD
 
 totaloutlier<-AidWorldTib%>%
   filter(AidperCapita >100)
 
 
-=======
+
 outlier<- AidWorldTib%>%
   filter(EconAidPerCapita>100 | MilAidPerCapita >100 | AidperCapita >100)
->>>>>>> 7f5c1380e3094d96b6aff096400e0698f8164504
+
 
 ```
 
@@ -109,12 +108,7 @@ inputPanel(selectInput("YAxis2", "Economic Indicator:",
                          "Hourly Minimum Wage"="HourlyMinWage"
                          )))
 inputPanel(selectInput("XAxis2", "Type of Aid:",
-<<<<<<< HEAD
 
-           choices= c("Economic Aid per Capita"= "EconAidPerCapita",
-                         "Military Aid per Capita"="MilAidPerCapita",
-                         "Total Aid per Capita"= "AidperCapita")))
-=======
            choices= c("Economic Aid per Capita"= "EconAidPerCapita",
                          "Military Aid per Capita"="MilAidPerCapita",
                          "Total Aid per Capita"= "AidperCapita")))
@@ -127,7 +121,7 @@ renderPlot({
          y= "Economic Indicator")
     })
 
->>>>>>> 7f5c1380e3094d96b6aff096400e0698f8164504
+
 
 titlePanel("Social Indicators vs. Type of Aid")
 
