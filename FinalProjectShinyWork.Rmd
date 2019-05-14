@@ -154,8 +154,20 @@ renderPlot({
 
 mainPanel(
 fluidRow("Above Average Literacy Rate? displays whether the country is above or below the global literacy rate, which is 91%."), 
-fluidRow("Above Average Life Expectancy Rate? displays whether or not a country is above the global average of the life expectancy rate. Out of all the contries that recieve funding, only one country, Isreal, is above the life expectancy rate and they only recieve Military Aid, not Economic Aid."),
-fluidRow("Above Average Poverty Rate? displays whether or not a country is above"))
+fluidRow("Above Average Life Expectancy Rate? displays whether or not a country is above the global average of the life expectancy rate, which is 71.5 years. Out of all the contries that recieve funding, only one country, Isreal, is above the life expectancy rate and they only recieve Military Aid, not Economic Aid."),
+fluidRow("Above Average Poverty Rate? Displays whether or not a country is above the global poverty average, which is 35%"))
+
+mainPanel(
+fluidRow("Sources:"),
+fluidRow("Gini Coefficient data: https://en.wikipedia.org/wiki/List_of_countries_by_income_equality "),
+fluidRow("Foreign Aid data: https://en.wikipedia.org/wiki/United_States_foreign_aid"),
+fluidRow("Life Expectancy data: https://en.wikipedia.org/wiki/List_of_countries_by_life_expectancy"),
+fluidRow("Literacy Rate data: https://en.wikipedia.org/wiki/List_of_countries_by_literacy_rate"),
+fluidRow("Poverty Rate data: https://en.wikipedia.org/wiki/List_of_countries_by_percentage_of_population_living_in_poverty"),
+fluidRow("GDP data: https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(nominal)"),
+fluidRow("Population data: https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)"),
+fluidRow("Minimum wage data: https://en.wikipedia.org/wiki/List_of_minimum_wages_by_country"),
+fluidRow("Not used, but tax data: https://en.wikipedia.org/wiki/List_of_countries_by_tax_rates"))
 
 
 ```
