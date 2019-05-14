@@ -27,8 +27,10 @@ library(dplyr)
 ```{r}
 AidWorldTib <- read.csv("~/Mscs 264 S19/Inclass/AidWorldTib.csv")%>%
   select(-X,-`GDP.US.million.`, -`Corporate.tax`, -AnnualMinWage)%>%
-  mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE)/3),
-         OverAverageLit = ifelse(TotalLiteracy>= 91, "Yes", "No"),
+  group_by(Country)%>%
+  mutate(TotalLiteracy = (sum(YouthLitRate, AdultLitRate, ElderlyLitRate, na.rm =TRUE))/3)%>%
+  ungroup%>%
+  mutate(OverAverageLit = ifelse(TotalLiteracy>= 91, "Yes", "No"),
          OverAverageLife = ifelse(`Both.sexes.lifeexpectancy..HALE.`>=71.5, "Yes", "No"),
          OverAveragePoverty = ifelse(PercentPoverty>=35, "Yes", "No"),
          EconAidPerCapita = (EconAssist*1000000/Population),
@@ -43,6 +45,13 @@ world <- map_data("world")%>%
 
 aidmapdata<- right_join(AidWorldTib, world, by = c("Country" = "place"))
 
+<<<<<<< HEAD
+=======
+totaloutlier<-AidWorldTib%>%
+  filter(AidperCapita >100)
+
+militaryoutlier
+>>>>>>> 35e73da035ad04867df0c84a342750a956a3203f
 
 
 ```
@@ -97,14 +106,28 @@ inputPanel(selectInput("YAxis2", "Economic Indicator:",
                          "Hourly Minimum Wage"="HourlyMinWage"
                          )))
 inputPanel(selectInput("XAxis2", "Type of Aid:",
+<<<<<<< HEAD
            choices= c("Economic Aid per Capita"= "EconAidPerCapita",
                          "Military Aid per Capita"="MilAidPerCapita",
                          "Total Aid per Capita"= "AidperCapita")))
+=======
+           choices= c("Total Aid"= "EconomicMilitaryAssist",
+                         "Economic Aid"= "EconAidPerCapita",
+                         "Military Aid"="MilAidPerCapita",
+                         "Aid per Capita"= "AidperCapita")))
+>>>>>>> 35e73da035ad04867df0c84a342750a956a3203f
 renderPlot({
+  if(input$XAxis2 == "Aid per Capita")
   ggplot(AidWorldTib, aes_string(x= input$XAxis2, y = input$YAxis2))+
     geom_point(aes(color = Continent))+
+<<<<<<< HEAD
     labs(x= "Type of Aid per Capita",
+=======
+    geom_text(aes(label = Country), data = outlier)+
+    labs(x= "Type of Aid",
+>>>>>>> 35e73da035ad04867df0c84a342750a956a3203f
          y= "Economic Indicator")
+  else
 })
 
 titlePanel("Social Indicators vs. Type of Aid")
